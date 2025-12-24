@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-// import path from 'path';
 
 // called the very first time a command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -14,8 +13,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         const document = editor.document;
-        // const ext = path.parse(document.fileName).ext;
-        const edits: { range: vscode.Range; replacement: string }[] = [];
 
         let selection = editor.selection;
         if (selection.isEmpty) {
@@ -68,6 +65,8 @@ function formatLine(selection: vscode.Selection, text: string) {
 
         let dir: keyof typeof replacements[typeof char] = "left";
 
+        // this should take into account other characters besides space
+        // like ) or ], or nested quotes, or maybe I should just use my common fn
         if (i === text.length - 1 || text[i + 1] === " ") {
             dir = "right";
         }
